@@ -1,0 +1,96 @@
+<mujoco model="two_link_arm">
+    <compiler angle="radian" meshdir="assets" autolimits="true" />
+    <option timestep="1e-4" integrator="RK4" gravity="0 -9.81 0">
+        <flag energy="enable" />
+    </option>
+
+    <asset>
+        <material name="sus" rgba="0.58 0.58 0.58 1" />
+        <material name="chrome" rgba="0.9 0.9 0.9 1.0" shininess="0.6" specular="0.774597" />
+        <material name="cyan_sus" rgba="0 0.9 0.7 1" />
+
+        <mesh file="link_1st.stl" />
+        <mesh file="axis_2nd_parent.stl" />
+        <mesh file="link_2nd_child.stl" />
+    </asset>
+
+    <default>
+        <default class="visual">
+            <geom type="mesh" contype="0" conaffinity="0" group="2" />
+        </default>
+    </default>
+
+    <worldbody>
+        <light name="spotlight" mode="targetbodycom" target="weight" pos="0 0 0.5" />
+
+        <!-- ground plane -->
+        <geom type="plane" size="1.0 1.0 0.1" rgba="0.9 0 0 1" />
+        
+        <body name="link_1st" pos="0 0 0.037">
+            <inertial mass="0.4009" pos="0.0185 0 0.018" fullinertia="183.885e-6 801.421e-6 739.265e-6 -2.65e-13 -204.073e-6 -1.29e-13"/>
+            <joint name="joint1" armature="0" type="hinge" pos="0 0 0" axis="0 0 1" /> <!-- damping="19.2303e-5" solreffriction="0.0001 1" frictionloss="0.032103" -->            
+            <geom class="visual" mesh="link_1st" material="chrome"/>
+        </body>
+
+        <body name="axis_2nd_parent" pos="0 0 0">
+            <inertial mass="1e-10" pos="0 0 0.0225" diaginertia="203.646e-6 203.646e-6 108.41e-6" />
+            <joint name="joint2_parent" armature="0" type="hinge" pos="0 0 0" axis="0 0 1"/> <!--damping="9.2871e-4" solreffriction="0.0001 1" frictionloss="0.0459" -->
+            <geom class="visual" mesh="axis_2nd_parent" material="sus" />
+        </body>
+
+        <body name="link_2nd_child" pos="0.15 0 0.071">
+            <inertial mass="0.0844" pos="0.032 0 0.0246" fullinertia="12.615e-6 223.227e-6 218.052e-6 6.65e-20 -24.115e-6 2.725e-20"/>
+            <joint name="joint2_child" type="hinge" pos="0 0 0" axis="0 0 1" />
+            <joint name="joint2_slide_x" type="slide" pos="0 0 0" axis="1 0 0" />
+            <joint name="joint2_slide_y" type="slide" pos="0 0 0" axis="0 1 0" />
+            <geom class="visual" mesh="link_2nd_child" material="chrome" />
+            
+            <site name="end_link" pos="0.15 0 0.036"/>
+            <!-- 36mm(offset) + 8.3mm/2(cylinder height/2) = 36mm + 4.15mm = 40.15mm -->
+            <body name="weight" pos="0.15 0 0.04015">
+                <inertial mass="0.1" pos="0 0 0"/>
+                <geom type="cylinder" size="0.022 0.00415" material="cyan_sus" />
+            </body>
+        </body>        
+    </worldbody>
+
+    <actuator>
+        <motor name="t_servo1" joint="joint1"/>
+        <motor name="t_servo2" joint="joint2_parent"/>
+    
+        <!-- joint 1 -->
+        <!-- <motor name="t_servo1" joint="joint1" forcelimited="true" forcerange="-0.355347 0.355347" ctrlrange="-0.355347 0.355347"/> -->
+        <!-- <position name="p_servo1" joint="joint1" kp="10.0" ctrlrange="-3.141592 3.141592" forcerange="-0.3 0.3"/> -->
+        <!-- <velocity name="v_servo1" joint="joint1" kv="3.0" ctrlrange="-3.141592 3.141592"/> -->
+        <!-- joint 2 (parent) -->
+        <!-- <motor name="t_servo2" joint="joint2_parent" forcelimited="true" forcerange="-0.16524 0.16524" ctrlrange="-0.16524 0.16524"/> -->
+        <!-- <position name="p_servo2p" joint="joint2_parent" kp="0.0" ctrlrange="-3.141592 3.141592"/> -->
+        <!-- <velocity name="v_servo2p" joint="joint2_parent" kv="0.01" /> -->
+        <!-- joint 2 (child) -->
+        <!-- <position name="p_servo2c_x" joint="joint2_slide_x" kp="0.1"/> -->
+        
+        <!-- <velocity name="v_servo2c_x" joint="joint2_slide_x" kv="0.01"/> -->
+        <!-- <position name="p_servo2c_y" joint="joint2_slide_y" kp="0.1"/> -->
+        <!-- <velocity name="v_servo2c_y" joint="joint2_slide_y" kv="0.01"/> -->
+    </actuator>
+
+    <equality>
+        <connect name="contact_constraint" active="true" body1="link_1st" body2="link_2nd_child" anchor="0.15 0 0.034" solref="1e-10 1" />
+        <joint name="axis_constraint" active="true" joint1="joint2_parent" joint2="joint2_child" solref="1e-10 1"/>
+    </equality>
+
+    <!-- 
+    <tendon>
+        <fixed limited="true" range="0 1e-4">
+            <joint joint="joint2_parent" coef="1.0" />
+            <joint joint="joint2_child" coef="-1.0" />
+        </fixed>
+    </tendon>
+     -->
+
+    <sensor>
+        <jointvel name="joint1_vel" joint="joint1" />
+        <jointvel name="joint2_vel" joint="joint2_parent" />
+    </sensor>
+
+</mujoco>
