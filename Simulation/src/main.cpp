@@ -2,7 +2,7 @@
 #include "EnvironmentManager.h"
 
 #define CONTROL_FREQ 1000 // [Hz]
-#define TOTAL_SIM_TIME 30 // [s]
+#define TOTAL_SIM_TIME 3 // [s]
 
 UEnvironmentManager Env; // env instance
 
