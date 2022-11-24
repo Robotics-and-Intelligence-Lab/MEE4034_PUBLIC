@@ -1,27 +1,24 @@
 # MEE4034_PUBLIC
 본 저장소는 이성온 교수님의 제어시스템설계(MEE4034) 과목의 두 번째 실습과 관련된 문서 및 프로젝트 파일을 공유하기 위해 생성되었습니다.
 
-***
-## 목표
-프로그래밍 작성 요령이 아닌 제어공학이라는 학문 자체에 집중할 수 있도록 간결한 실습 프로젝트를 구성하고 제공하는 것에 있습니다.
-
 * * *
 ## 준비하기
-### 1. 설치
+### 1. 설치(클릭 시 이동)
 * [Visual Studio Community](https://visualstudio.microsoft.com/ko/vs/community/): C++ 컴파일러(MSVC v142)<sup>1</sup> 및 통합 개발환경<sup>2</sup>
+
+    설치옵션: 
     > VS2017(v140), VS2019(v141)에서도 정상동작함을 확인하였습니다.
-* [CMake](https://cmake.org/download/): Cross-Platform 빌드시스템 관리 툴
-    > 3.25(latest): https://github.com/Kitware/CMake/releases/download/v3.25.0/cmake-3.25.0-windows-x86_64.msi
-* [Git](https://git-scm.com/downloads) (선택사항)
-    > 2.38.1(latest): https://git-scm.com/download/win
+    
+* [CMake](https://github.com/Kitware/CMake/releases/download/v3.25.0/cmake-3.25.0-windows-x86_64.msi): Cross-Platform 빌드시스템 관리 툴
+    > 3.25(latest): https://cmake.org/
+
+* 설치옵션 안내: [Visual Studio 2022](https://github.com/Robotics-and-Intelligence-Lab/MEE4034_PUBLIC/tree/main/docs/INSTALL_VS.md), [CMake](https://github.com/Robotics-and-Intelligence-Lab/MEE4034_PUBLIC/tree/main/docs/INSTALL_CMAKE.md)
 
 ### 2. 저장소 복제 및 프로젝트 구성/생성
 * 저장소 복제
 
-    [저장소](https://github.com/Robotics-and-Intelligence-Lab/MEE4034_PUBLIC.git)에서 [Download ZIP](https://github.com/Robotics-and-Intelligence-Lab/MEE4034_PUBLIC/archive/refs/heads/main.zip)을 클릭하여 프로젝트 압축 파일을 다운로드 후 압축해제<sup>1</sup> 혹은 바탕화면에서 Git Bash를 실행한 후 아래의 명령어를 통해 프로젝트 압축 파일을 복제<sup>2</sup>합니다.
-    ```bash
-    git clone https://github.com/Robotics-and-Intelligence-Lab/MEE4034_PUBLIC.git
-    ```
+    저장소에서 [Download ZIP](https://github.com/Robotics-and-Intelligence-Lab/MEE4034_PUBLIC/archive/refs/heads/main.zip)을 클릭하여 프로젝트 압축 파일을 다운로드 후 압축해제합니다.
+
     이 과정을 마친 후 MEE4034_PUBLIC 폴더 내에 다음과 같은 파일이 위치해있는지 확인합니다.
     ```
     MEE4034_PUBLIC
@@ -30,20 +27,21 @@
     - Simulation
     - ...
     ```
-* CMake를 이용한 프로젝트 구성/생성
-
+* CMake를 이용한 프로젝트 구성/생성 
+    > 경로에 한글이 포함된 경우 문제가 발생할 수 있습니다. 예) C:/연습/MEE4034_PUBLIC/...
     1. Simulation 폴더 내에 `build` 폴더를 생성합니다.
     2. CMake를 실행한 후 
         
         `Where is the source code`란에는 Simulation 폴더의 경로를 입력하고, (`Browse Source...` 기능 활용)
         
         `Where to build the binaries`란에는 Simulation/build 폴더의 경로를 입력합니다. (`Browse Build...` 기능 활용)
-    3. `Specify the generator for this project`란에 자신이 설치한 Visual Studio 버전을 선택(Visual Studio 17 2022)한 뒤, `Finish` 버튼을 눌러서 프로젝트 구성이 완료되도록 합니다.
+    3. `Configure` 버튼을 클릭합니다.
+    4. `Specify the generator for this project`란에 자신이 설치한 Visual Studio 버전을 선택(Visual Studio 17 2022)한 뒤, `Finish` 버튼을 눌러서 프로젝트 구성이 완료되도록 합니다.
 
         <img src="docs/img/cmake_config.png" width="428px" height="437px" title="cmake_config" alt="cmake_config"></img>
 
         > 이 과정에서 문제가 없어야 합니다.
-    4. `Generate` 버튼을 클릭 및 `Open Project` 버튼을 클릭하여 Visual Studio을 실행시키고 `Ctrl + F5`의 단축키를 눌러서 `Simulation` 파일을 실행합니다.
+    5. `Generate` 버튼을 클릭 및 `Open Project` 버튼을 클릭하여 Visual Studio을 실행시키고 `Ctrl + F5`의 단축키를 눌러서 `Simulation` 파일을 실행합니다.
 
         <img src="docs/anim/sim_basic.gif" width="400px" height="233px" title="cmake_config" alt="cmake_config"></img>
 
@@ -52,6 +50,7 @@
 ***
 ## 시작하기
 시뮬레이션을 구성하는 관련된 모든 물리적 정보(중력, 회전관성, 속도 등)는 [MuJoCo](https://mujoco.org/)라는 물리엔진 라이브러리에 의해 관리됩니다. 
+> `Simulation/thirdparty/mujoco` 안에 해당 물리엔진 라이브러리 파일이 존재하며, CMake로 프로젝트 구성 시 자동으로 링크가 되도록 설정되어 있습니다. (MuJoCo를 직접 다운로드 할 필요가 없음)
 
 프로젝트 및 소스 파일을 별도로 수정하지 않았다면 다음의 조건으로 물리엔진이 시뮬레이션 하도록 설정되어 있습니다.
 
@@ -242,9 +241,9 @@ void Callback(double DeltaTime)
 `제어 루프(loop)`의 두 번째 단계에 해당하는 오차를 계산하고 이에 적합한 토크를 계산 및 적용해봅시다.
 
 오차를 계산하려면 목표부터 설정되어 있어야 합니다.
-> 예) 로봇을 세우고 싶습니다.
+> 예) $q_1=\pi/2, q_2=\pi/2$
 
-위와 같은 경우 각 관절의 목표 각도는 (𝝿/2, 𝝿/2)에 대응됩니다. 편의상 𝝿: 3.14로 간주합니다.
+(편의상 𝝿: 3.14로 간주)
 
 이번에 진행될 예제도 마찬가지로 `main.cpp` 파일을 수정하는 방식으로 진행됩니다.
 
@@ -335,6 +334,7 @@ void Callback(double DeltaTime)
 ## 마무리
 우리는 이 문서에서 프로젝트를 구성<sup>1</sup>하고 첫 번째 제어를 수행<sup>2</sup>하는 과정에 이르기까지 몇 가지 개념적인 부분<sup>3</sup>을 다루고 직접 실습해보았습니다. 
 다음 [문서]()에서는 조금 더 체계적이고 분석적인 접근을 하기위한 몇 가지 기능들을 추가적으로 다뤄보도록 하겠습니다. 
+> 이어지는 문서는 수업 진행 후 공개 예정
 
 # :beers:
 
