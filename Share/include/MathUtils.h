@@ -32,5 +32,11 @@ public:
     static void PrintMatrix(double M[], const int Rows, const int Cols, std::string Name);
     static void PrintVector(double Vec[], const int Size, std::string Name);
 
-    template <typename T> T Constain(T Value, T Min, T Max) { return std::max(Min, std::min(Value, Max)); }
+    template <typename T> static T Constrain(T Value, T Min, T Max) { return std::max(Min, std::min(Value, Max)); }
+    template <typename T> static void Constrain(T Value[2], T Min, T Max)
+    { 
+        Value[0] = std::max(Min, std::min(Value[0], Max)); 
+        Value[1] = std::max(Min, std::min(Value[1], Max));
+    }
+
 };
