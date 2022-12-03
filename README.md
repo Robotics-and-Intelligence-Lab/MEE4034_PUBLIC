@@ -333,8 +333,7 @@ void Callback(double DeltaTime)
 
 ## 마무리
 우리는 이 문서에서 프로젝트를 구성<sup>1</sup>하고 첫 번째 제어를 수행<sup>2</sup>하는 과정에 이르기까지 몇 가지 개념적인 부분<sup>3</sup>을 다루고 직접 실습해보았습니다. 
-다음 [문서]()에서는 조금 더 체계적이고 분석적인 접근을 하기위한 몇 가지 기능들을 추가적으로 다뤄보도록 하겠습니다. 
-> 이어지는 문서는 수업 진행 후 공개 예정
+다음 [문서](https://github.com/Robotics-and-Intelligence-Lab/MEE4034_PUBLIC/blob/main/docs/TUTORIAL01.md)에서는 조금 더 체계적이고 분석적인 접근을 하기위한 몇 가지 기능들을 추가적으로 다뤄보도록 하겠습니다.
 
 # :beers:
 
