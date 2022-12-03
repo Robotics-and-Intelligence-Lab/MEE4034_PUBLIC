@@ -5,8 +5,6 @@
 ## 준비하기
 ### 1. 설치(클릭 시 이동)
 * [Visual Studio Community](https://visualstudio.microsoft.com/ko/vs/community/): C++ 컴파일러(MSVC v142)<sup>1</sup> 및 통합 개발환경<sup>2</sup>
-
-    설치옵션: 
     > VS2017(v140), VS2019(v141)에서도 정상동작함을 확인하였습니다.
     
 * [CMake](https://github.com/Kitware/CMake/releases/download/v3.25.0/cmake-3.25.0-windows-x86_64.msi): Cross-Platform 빌드시스템 관리 툴
