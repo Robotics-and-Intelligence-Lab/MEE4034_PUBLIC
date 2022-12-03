@@ -43,7 +43,7 @@
         > 이 과정에서 문제가 없어야 합니다.
     5. `Generate` 버튼을 클릭 및 `Open Project` 버튼을 클릭하여 Visual Studio을 실행시키고 `Ctrl + F5`의 단축키를 눌러서 `Simulation` 파일을 실행합니다.
 
-        <img src="docs/anim/sim_basic.gif" width="400px" height="233px" title="cmake_config" alt="cmake_config"></img>
+        <img src="docs/anim/sim_basic.gif" width="400px" height="233px" title="sim_basic" alt="sim_basic"></img>
 
         > Simulation/build 폴더 내에 솔루션 파일(`Simulator.sln`)을 더블클릭하여 생성된 프로젝트에 언제든 접근할 수 있습니다. 
 
