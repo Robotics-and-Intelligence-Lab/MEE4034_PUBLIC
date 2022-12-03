@@ -282,7 +282,7 @@ $\theta_e \stackrel{\text{def}}{=} \theta_d-\theta$로 기호를 정의하여 �
 
 $\Longrightarrow M(\theta)(\ddot{\theta}_e+k_1\dot{\theta_e}+k_0\theta_e)=0 \quad \dotsi (4)$
 
-미분방정식 $(4)$를 풀이하기 위해 양변의 좌측에 $M(\theta)$의 역행렬 $M(\theta)^{-1}$을 곱한 뒤, `라플라스 변환(Laplace transform)`을 취해봅니다.
+미분방정식 $(4)$를 풀기 위해 양변의 좌측에 $M(\theta)$의 역행렬 $M(\theta)^{-1}$을 곱한 뒤, `라플라스 변환(Laplace transform)`을 취해봅니다.
 > 계산의 편의를 위해 초기값은 모두 0으로 가정합니다. ( $\theta_e(0^-), \dot{\theta_e}(0^-), \ddot{\theta_e}(0^-)$ )=( ${0_{2\times1},0_{2\times1},0_{2\times1}}$ )
 
 $\Longrightarrow (s^2+k_1s+k_0)\Theta_e(s)=0 \quad \dotsi (5)$
@@ -349,7 +349,7 @@ void Callback(double DeltaTime)
     }
     ```    
 
-+ `Temp1` 계산<sup>1</sup> 및 `T` 계산<sup>2</sup>
++ `Temp2` 계산<sup>1</sup> 및 `T` 계산<sup>2</sup>
     ```c++
     void Callback(double DeltaTime)
     {
@@ -366,13 +366,13 @@ void Callback(double DeltaTime)
 <img src="anim/idc_basic.gif" width="400px" height="233px" title="idc_basic" alt="idc_basic"></img>
 > `TOTAL_SIM_TIME` 값을 증가시켜서 관측 시간을 증가시킬 경우 감쇠진동 후 목표에 도달하는 것을 확인할 수 있습니다.
 
-앞서 말했듯 $\theta_e(t)$의 응답(response)을 결정짓는 특성방정식은 $s^2+k_1s+k_0=0$에 대응되므로, 특성방정식의 근 $p_{1,2}$이 어디에 위치시키는 지에 따라 달라진다고 말할 수 있습니다.
+앞서 말했듯 $\theta_e(t)$의 응답(response)을 결정짓는 특성방정식은 $s^2+k_1s+k_0=0$에 대응되므로, 특성방정식의 근 $p_{1,2}$을 어디에 위치시키는 지에 따라 응답 곡선이 달라진다고 말할 수 있습니다.
 
 동시에 최고차 항의 차수가 2차이므로 응답은 다음 세 가지 유형 중 하나에 해당합니다.
 
-* Underdamped response (저감쇠)
+* Under-damped response (저감쇠)
 * Critically-damped response (임계감쇠)
-* Overdamped response (과감쇠)
+* Over-damped response (과감쇠)
 
 특성방정식을 표준형 형태로 표기하면 조금 더 직관을 갖고 $k_0, k_1$를 결정할 수 있습니다.
 
