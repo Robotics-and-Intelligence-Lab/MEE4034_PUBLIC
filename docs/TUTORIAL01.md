@@ -86,6 +86,10 @@ $\tau=f(\theta,\dot{\theta},\ddot{\theta})=M(\theta)\ddot{\theta}+c(\theta,\dot{
 
 $\tau=k_p(\theta_d-\theta)+k_d(\dot{\theta_d}-\dot{\theta})=k_p\theta_{err}+k_d\dot{\theta_{err}}$
 
+이에 대한 Blockdiagram은 다음과 같습니다.
+
+<img src="img/blockdiagram/pd.png" width="400px" title="pd" alt="pd"></img>
+
 다음과 같은 Gain을 갖는 PD 제어기를 설계해봅시다.
 > $k_p=1.0, k_d=0.1$
 
@@ -180,12 +184,15 @@ File path: log.txt
 > `log_viewer.m`에서 `dataHist(:,1)`은 전체 데이터 중 1열의 데이터 벡터에 해당합니다.
 
 ## PD Control with Gravity compensation
-정상상태 오차(Steady state error)의 근본적인 원인은 아래 동역학 식에서 $g(\theta)$로 인해 발생합니다.
+정상상태 오차(Steady state error)의 근본적인 원인은 동역학 식 ( $\tau=M(\theta)\ddot{\theta}+c(\theta,\dot{\theta})+g(\theta)$ ) 중 $g(\theta)$로 인해 발생합니다.
 
-$\tau=M(\theta)\ddot{\theta}+c(\theta,\dot{\theta})+g(\theta)$
-> 정상상태의 경우 $M(\theta)\ddot{\theta}=0, c(\theta,\dot{\theta})=0$이 성립합니다.
+강의에서 다뤘듯 $\tau=\tau_{pd}+g(\theta)$와 같이 제어 입력을 줄 경우 단순히 제어특성이 좋아질 뿐 아니라 정상상태 오차가 없어집니다. 
 
-강의에서 다뤘듯 $\tau_{pd}+g(\theta)=M(\theta)\ddot{\theta}+c(\theta,\dot{\theta})+g(\theta)$와 같이 제어 입력을 줄 경우 단순히 제어특성이 좋아질 뿐 아니라 정상상태 오차가 없어집니다.
+$\tau=\tau_{pd}+g(\theta)=k_p\theta_{err}+k_d\dot{\theta_{err}}+g(\theta)$
+
+이에 대한 Blockdiagram은 다음과 같습니다.
+
+<img src="img/blockdiagram/pd_with_g.png" width="400px" title="pd_with_g" alt="pd_with_g"></img>
 
 `Callback 함수`의 내용을 일부 수정하여 이를 직접 구현해보도록 하겠습니다. 구현하기에 앞서, `UDynamicsUtils`는 현재의 상태 변수( $\theta, \dot{\theta}$ )를 입력받아 해당 상태에 대응되는 $M(\theta), c(\theta,\dot{\theta}), g(\theta)$를 계산 및 반환하는 역할을 수행합니다. 
 > `UDynamicsUtils`는 `DUtils`(변수명)으로 생성되어 있습니다. (`main.cpp`의 12번째 줄 참고)
@@ -258,6 +265,8 @@ $g(\theta)$를 계산 및 획득하기 위해 `Callback 함수`를 다음과 같
 > 일반적으로 계산된 제어 입력에 $g(\theta)$를 더해주는 행위를 `중력보상`이라고 표현합니다.
 
 ## Inverse Dynamics Control (Computed Torque Control)
+:warning: PD제어기와 다른 제어기입니다.
+
 제대로 된 동역학 모델없이 PD 제어기 + 중력보상을 수행한 경우 `과도기 응답`(Transient response)을 유추하기 어렵습니다. 이러한 이유로 모터 드라이버 업체에서 `Gain 튜닝 자동화` 솔루션을 제품과 함께 제공하는 [사례](https://www.elmomc.com/capabilities/servo-technology/servo-tools/advanced-wizard-tuning/)를 찾아볼 수 있습니다.
 
 제어하고자 하는 시스템에 대한 동역학 모델이 있다는 것은 설계자 입장에서 많은 이점을 취할 수 있다는 것을 의미합니다. 일례로, 시스템이 원하는 `과도기 응답`을 보이도록 제어기를 설계할 수 있습니다. `Inverse Dynamics Control`은 이를 구현하는 방법론 중 한 종류에 해당합니다.
