@@ -1,4 +1,12 @@
 # Tutorial 01
+## 목표
+아래와 같이 총 3가지 유형의 제어기를 직접 구현합니다.
+
++ PD 제어기 ( $\tau=k_p\theta_e + k_d\dot{\theta_e}$ )
++ PD 제어기 + 중력보상 ( $\tau=k_p\theta_e + k_d\dot{\theta_e} + g(\theta)$ )
++ Inverse dynamics 제어기 ( $\tau=M(\theta)(\ddot{\theta_d}+k_1\dot{\theta_e}+k_0\theta_e) + c(\theta, \dot{\theta}) + g(\theta)$ )
+
+## 기초
 토크 입력( $\tau$ )과 
 시스템의 상태 변수( $\theta, \dot{\theta}, \ddot{\theta}$ )을 나타내는 함수 $f$는 다음과 같습니다.
 
